@@ -20,10 +20,8 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,7 +31,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.learningapp.ui.theme.LearningAppTheme
-import kotlin.collections.plusAssign
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +46,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Labels() {
-    var c by remember { mutableStateOf(0) }
+    val count = remember { mutableStateOf(0) }
 
     Box(
         modifier = Modifier
@@ -68,7 +65,7 @@ fun Labels() {
             color = Color(red = 255, green = 0, blue = 0)
         )
         Text(
-            text = "Total clicks - $c",
+            text = "Total clicks - ${count.value}",
             modifier = Modifier
                 .padding(top = 100.dp)
                 .background(
@@ -90,9 +87,9 @@ fun Labels() {
             .offset(x = 50.dp, y = 300.dp)
             .background(Color.LightGray)
             .size(width = 150.dp, height = 50.dp)
+            .clickable(enabled = true, onClick = { count.value += 1 })
             .padding(top = 3.dp, start = 3.dp, end = 70.dp, bottom = 20.dp)
-            .background(Color.Black)
-            .clickable(enabled = true, onClick = { c += 1}),
+            .background(Color.Black),
         color = Color.White
     )
 }
