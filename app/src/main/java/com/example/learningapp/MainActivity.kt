@@ -49,7 +49,6 @@ fun PreviewFun(){
     }
 }
 
-
 @Composable
 fun Screen() {
     var clickCount = remember { mutableStateOf(0) }
