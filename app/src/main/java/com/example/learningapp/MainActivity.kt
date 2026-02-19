@@ -6,9 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,40 +29,70 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearningAppTheme {
-
+                Scaffold(modifier = Modifier.padding()) {innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .padding(all = 20.dp)
+                            .fillMaxSize()
+                    ) {
+                        for (item in listItems){
+                            ListItem(item)
+                        }
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun Greeting(modifier: Modifier) {
-    Box (
-        contentAlignment = Alignment.TopCenter,
+fun ListItem(content: Item) {
+    Row(
         modifier = Modifier
-            .fillMaxSize()
-            .then(modifier),
-    ) {
-        Text(
-            text = "Hello World!",
-            fontSize = 30.sp,
+            .padding(bottom = 20.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        Box(
             modifier = Modifier
-                .offset(y = 100.dp)
+                .size(50.dp, 50.dp)
+                .background(Color(content.boxColor)),
+        )
+        Text(
+            text = content.text,
+            modifier = Modifier
+                .offset(x = 15.dp),
+            fontSize = 26.sp,
+            letterSpacing = 1.sp,
+            color = Color(content.textColor)
+
         )
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun GreetingPreview() {
+fun Preview() {
     LearningAppTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            Box(
+        Scaffold(modifier = Modifier.padding()) {innerPadding ->
+            Column(
                 modifier = Modifier
+                    .padding(innerPadding)
+                    .padding(all = 20.dp)
                     .fillMaxSize()
-                    .background(Color(0xFF808000))
-            )
-            Greeting(modifier = Modifier.padding(innerPadding))
+            ) {
+                for (item in listItems){
+                    ListItem(item)
+                }
+            }
         }
     }
 }
+
+data class Item(val text: String, val textColor:Long = 0xFF000000, val boxColor:Long)
+val listItems = listOf(
+    Item(text = "Oranges", boxColor = 0xffFFA500),
+    Item(text = "Tomatoes", boxColor = 0xffFF0000),
+    Item(text = "Apples", boxColor = 0xff7CFC00),
+)
+
