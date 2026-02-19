@@ -5,28 +5,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,67 +29,70 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearningAppTheme {
-                Labels()
+                Scaffold(modifier = Modifier.padding()) {innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .padding(all = 20.dp)
+                            .fillMaxSize()
+                    ) {
+                        for (item in listItems){
+                            ListItem(item)
+                        }
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun Labels() {
-    val count = remember { mutableStateOf(0) }
-
-    Box(
+fun ListItem(content: item) {
+    Row(
         modifier = Modifier
-            .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.systemBars)
-            .padding(top = 50.dp),
-        contentAlignment = Alignment.TopCenter
-    ) {
-        Text(
-            text = "Hello World!",
+            .padding(bottom = 20.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        Box(
             modifier = Modifier
-                .background(Color.Yellow)
-                .border(width = 2.dp, color = Color.Black, shape = RectangleShape)
-                .padding(all = 20.dp),
-            fontSize = 20.sp,
-            color = Color(red = 255, green = 0, blue = 0)
+                .size(50.dp, 50.dp)
+                .background(Color(content.boxColor)),
         )
         Text(
-            text = "Total clicks - ${count.value}",
+            text = content.text,
             modifier = Modifier
-                .padding(top = 100.dp)
-                .background(
-                    shape = CircleShape,
-                    color = Color.Green
-                )
-                .padding(top = 5.dp)
-                .width(300.dp)
-                .height(50.dp),
-            fontSize = 20.sp,
-            color = Color.Blue,
-            textAlign = TextAlign.Center
+                .offset(x = 15.dp),
+            fontSize = 26.sp,
+            letterSpacing = 1.sp,
+            color = Color(content.textColor)
+
         )
     }
-
-    Text(
-        text = "click me",
-        modifier = Modifier
-            .offset(x = 50.dp, y = 300.dp)
-            .background(Color.LightGray)
-            .size(width = 150.dp, height = 50.dp)
-            .clickable(enabled = true, onClick = { count.value += 1 })
-            .padding(top = 3.dp, start = 3.dp, end = 70.dp, bottom = 20.dp)
-            .background(Color.Black),
-        color = Color.White
-    )
 }
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun GreetingPreview() {
+fun Preview() {
     LearningAppTheme {
-        Labels()
+        Scaffold(modifier = Modifier.padding()) {innerPadding ->
+            Column(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .padding(all = 20.dp)
+                    .fillMaxSize()
+            ) {
+                for (item in listItems){
+                    ListItem(item)
+                }
+            }
+        }
     }
 }
+
+data class item(val text: String, val textColor:Long = 0xFF000000, val boxColor:Long)
+val listItems = listOf(
+    item(text = "Oranges", boxColor = 0xffFFA500),
+    item(text = "Tomatoes", boxColor = 0xffFF0000),
+    item(text = "Apples", boxColor = 0xff7CFC00),
+)
+
