@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-02-08T14:49:44.457167600Z">
+        <DropdownSelection timestamp="2026-02-20T17:50:24.548447100Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Mirasvet\.android\avd\Medium_Phone.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=SKR8ZL9PKBAAYD5D" />
             </handle>
           </Target>
         </DropdownSelection>
